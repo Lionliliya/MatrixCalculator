@@ -51,10 +51,11 @@ public class Calculator {
         System.out.println("It must be bigger than 0.");
         int k;
         int l;
+        String s;
         while (true) {
           //  scanner = new Scanner(System.in);
-            if (scanner.hasNextInt()) {
-                k = scanner.nextInt();
+            if (MatrixValidator.isInteger(String.valueOf(s = scanner.nextLine()))) {
+                k = Integer.parseInt(s);
                 if (k > 0) {
                     l = k;
                     break;
@@ -70,10 +71,11 @@ public class Calculator {
 
         double d;
        // scanner = new Scanner(System.in);
+        String s;
 
         while (true) {
-            if (scanner.hasNextDouble()) {
-                d = scanner.nextDouble();
+            if (MatrixValidator.isDigit(String.valueOf(s = scanner.nextLine()))) {
+                d = Double.parseDouble(s);
                 break;
             }
         }
@@ -187,7 +189,6 @@ public class Calculator {
                         System.out.println("Please, enter \'y\' or \'n\'.");
                     }
                 }
-                break;
             }
             else {
                 System.out.println("Please, make your choice.");
@@ -210,8 +211,9 @@ public class Calculator {
             resultMatrix = operations.substraction(matrix1, matrix2);
         } else if (s.equals("*") && MatrixValidator.areMultiplyable(matrix1, matrix2)) {
             resultMatrix = operations.multiply(matrix1, matrix2);
+        } else if (!MatrixValidator.areSameDimension(matrix1, matrix2) || !MatrixValidator.areMultiplyable(matrix1, matrix2)) {
+            System.out.println("Matrices have not the same dimension.");
         }
-        System.out.println("Matrices have not the same dimension.");
         return resultMatrix;
     }
 
@@ -312,10 +314,12 @@ public class Calculator {
        // Scanner scanner = new Scanner(System.in);
 
         Matrix matrix = new Matrix(rows, columns);
+        String s;
 
         for (int k = 0; k < rows; k++) {
             for (int j = 0; j < columns; j++) {
                 while (true) {
+                    s = scanner.nextLine();
                     if (scanner.hasNextDouble() || scanner.hasNextInt()) {
                         matrix.setElement(k, j, scanner.nextDouble());
                         break;
@@ -332,13 +336,13 @@ public class Calculator {
 
         Matrix matrix = new Matrix(rows, columns);
 
-        try {
+
             JFileChooser dialog = new JFileChooser();
             dialog.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
             dialog.showOpenDialog(null);
             File file = dialog.getSelectedFile();
+        try (FileInputStream inF = new FileInputStream(file)) {
 
-            FileInputStream inF = new FileInputStream(file);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inF, "utf-8"));
             String s;
             List<String> list = new ArrayList<>();
