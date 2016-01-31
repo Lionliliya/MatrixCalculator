@@ -22,6 +22,7 @@ public class Calculator {
         }
     }
 
+    //Стартовое сообщение в начале работы программы
     public void startMessages() {
 
         System.out.printf("Hi! This is matrix calculator!");
@@ -39,6 +40,7 @@ public class Calculator {
         System.out.println("Please, make your choice.");
     }
 
+    // Любой ввод данных
     private String operationEntering() {
 
       //  scanner = new Scanner(System.in);
@@ -46,6 +48,7 @@ public class Calculator {
         return s;
     }
 
+    // Ввод размеров матриц. Должны быть положительные числа.
     private int numberEntering() {
         System.out.println("Please, enter one of sizes of your matrix");
         System.out.println("It must be bigger than 0.");
@@ -54,11 +57,14 @@ public class Calculator {
         String s;
         while (true) {
           //  scanner = new Scanner(System.in);
-            if (MatrixValidator.isInteger(String.valueOf(s = scanner.nextLine()))) {
+            if (MatrixValidator.isInteger(String.valueOf(s = operationEntering()))) {
                 k = Integer.parseInt(s);
                 if (k > 0) {
                     l = k;
                     break;
+                }
+                else {
+                    System.out.println("Please, enter a number bigger than 0.");
                 }
             } else {
                 System.out.println("Please, enter a number bigger than 0.");
@@ -67,6 +73,7 @@ public class Calculator {
         return l;
     }
 
+    // Ввод содержимого матриц. Любые вещественные числа.
     public double readNumber() {
 
         double d;
@@ -74,7 +81,7 @@ public class Calculator {
         String s;
 
         while (true) {
-            if (MatrixValidator.isDigit(String.valueOf(s = scanner.nextLine()))) {
+            if (MatrixValidator.isDigit(String.valueOf(s = operationEntering()))) {
                 d = Double.parseDouble(s);
                 break;
             }
@@ -110,6 +117,7 @@ public class Calculator {
         while (true) {
             String s = operationEntering();
             if (s.equals("e")) {
+                scanner.close();
                 System.exit(0);
             }
             else if (s.equals("+") || s.equals("-") || s.equals("*")) {
@@ -129,7 +137,9 @@ public class Calculator {
                                     double number = readNumber();
                                     MatrixOperations operations = new MatrixOperations();
                                     resultMatrix = operations.multiply(matrix, number);
-                                    printResult(resultMatrix);
+                                    if (!resultMatrix.equals(null)) {
+                                        printResult(resultMatrix);
+                                    }
                                     break;
                                 }
                                 else if (s3.equals("n")) {
@@ -141,7 +151,9 @@ public class Calculator {
                             }
                         }
                         resultMatrix = makeAction(matrix, s);
-                        printResult(resultMatrix);
+                        if (!resultMatrix.equals(numberEntering())) {
+                            printResult(resultMatrix);
+                        }
                         break;
                     }
                     else if (s1.equals("n")) {
@@ -191,32 +203,40 @@ public class Calculator {
                 }
             }
             else {
+                System.out.println("Here you can calculate your matrices.");
                 System.out.println("Please, make your choice.");
                 System.out.println("To make choice you need to enter one of these letters: '+', '-', '*','e'");
             }
         }
     }
 
-
+    // Выбор и осуществление действия, произодимого между двумя матрицами.
     public Matrix makeAction(Matrix matrix1, String s) {
 
-        Matrix matrix2 = chooseCreationWay();
+        Matrix matrix2 = null;
         MatrixOperations operations = new MatrixOperations();
 
         Matrix resultMatrix = null;
 
-        if (s.equals("+") && MatrixValidator.areSameDimension(matrix1, matrix2)) {
-            resultMatrix = operations.add(matrix1, matrix2);
-        } else if (s.equals("-") && MatrixValidator.areSameDimension(matrix1, matrix2)) {
-            resultMatrix = operations.substraction(matrix1, matrix2);
-        } else if (s.equals("*") && MatrixValidator.areMultiplyable(matrix1, matrix2)) {
-            resultMatrix = operations.multiply(matrix1, matrix2);
-        } else if (!MatrixValidator.areSameDimension(matrix1, matrix2) || !MatrixValidator.areMultiplyable(matrix1, matrix2)) {
-            System.out.println("Matrices have not the same dimension.");
+        while (true) {
+            matrix2 = chooseCreationWay();
+            if (s.equals("+") && MatrixValidator.areSameDimension(matrix1, matrix2)) {
+                resultMatrix = operations.add(matrix1, matrix2);
+                break;
+            } else if (s.equals("-") && MatrixValidator.areSameDimension(matrix1, matrix2)) {
+                resultMatrix = operations.substraction(matrix1, matrix2);
+                break;
+            } else if (s.equals("*") && MatrixValidator.areMultiplyable(matrix1, matrix2)) {
+                resultMatrix = operations.multiply(matrix1, matrix2);
+                break;
+            } else if (!MatrixValidator.areSameDimension(matrix1, matrix2) || !MatrixValidator.areMultiplyable(matrix1, matrix2)) {
+                System.out.println("Matrices have not the same dimension.");
+            }
         }
         return resultMatrix;
     }
 
+    // Выбор способа создания матрицы (случайное заполнение, из консоли, из файла).
     private Matrix chooseCreationWay() {
 
         System.out.println("By what way you want to create this matrix?");
@@ -247,6 +267,7 @@ public class Calculator {
         return matrix;
     }
 
+    // Вывод результирующей матрицы на экран.
     public void printResult(Matrix resultMatrix) {
 
         int k = 0;
@@ -266,6 +287,7 @@ public class Calculator {
         }
     }
 
+    // Выбор формата вывода матрицы (целые числа).
     private void printIntResult(Matrix result) {
 
         for (int i = 0; i < result.getRowsNumber(); i++) {
@@ -276,6 +298,7 @@ public class Calculator {
         }
     }
 
+    // Выбор формата вывода матрицы(вещественные числа).
     private void printDoubleResult(Matrix result) {
 
         for (int i = 0; i < result.getRowsNumber(); i++) {
@@ -286,27 +309,26 @@ public class Calculator {
         }
     }
 
-
+    // Создание матрицы, заполненной случайными вещественными числами в диапазоне от -100 до 100.
     public Matrix readRandomMatrix(int rows, int columns) {
 
         Matrix matrix = new Matrix(rows, columns);
 
         for (int i = 0; i < rows; i++) {
-            int j = 0;
             for (int l = 0; l < columns; l++) {
-                j++;
                 double indication = Math.random() * 10;
                 int k = (int) Math.round(indication);
                 if (k >= 5) {
-                    matrix.setElement(i, j, Math.random() * 100);
+                    matrix.setElement(i, l, Math.random() * 100);
                 } else {
-                    matrix.setElement(i, j, Math.random() * 100 * (-1));
+                    matrix.setElement(i, l, Math.random() * 100 * (-1));
                 }
             }
         }
         return matrix;
     }
 
+    // Создание матрицы и заполнение ее вручную из консоли.
     public Matrix readMatrixFromConsole(int rows, int columns) {
 
         System.out.println("Please, fill your matrix by numbers.");
@@ -319,9 +341,8 @@ public class Calculator {
         for (int k = 0; k < rows; k++) {
             for (int j = 0; j < columns; j++) {
                 while (true) {
-                    s = scanner.nextLine();
-                    if (scanner.hasNextDouble() || scanner.hasNextInt()) {
-                        matrix.setElement(k, j, scanner.nextDouble());
+                    if (MatrixValidator.isDigit(String.valueOf(s = operationEntering()))){
+                        matrix.setElement(k, j, Double.parseDouble(s));
                         break;
                     } else {
                         System.out.println("You have to enter Integer or Double numbers.");
@@ -332,6 +353,7 @@ public class Calculator {
         return matrix;
     }
 
+    // Создание матрицы и получение значений для нее из файла.
     public Matrix readMatrixFromFile(int rows, int columns) {
 
         Matrix matrix = new Matrix(rows, columns);
