@@ -9,7 +9,7 @@ public class MatrixOperations {
         Matrix matrix = new Matrix(RowsNumber, ColumsNumber);
         for (int i = 0; i < RowsNumber; i++) {
             for (int j = 0; j < ColumsNumber; j++) {
-                int sum = 0;
+                double sum = 0;
                 for (int k = 0; k < m2.getRowsNumber(); k++) {
                     matrix.setElement(i, j, sum += (m1.getElement(i, k) * m2.getElement(k, j)));
                 }
