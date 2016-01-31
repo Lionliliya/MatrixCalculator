@@ -11,6 +11,8 @@ import java.util.StringTokenizer;
 
 public class Calculator {
 
+    private Scanner scanner = new Scanner(System.in);
+
     private static void sleepingTime(long milisec) {
 
         try {
@@ -39,9 +41,8 @@ public class Calculator {
 
     private String operationEntering() {
 
-        Scanner scanner = new Scanner(System.in);
+      //  scanner = new Scanner(System.in);
         String s = scanner.nextLine();
-        scanner.close();
         return s;
     }
 
@@ -51,7 +52,7 @@ public class Calculator {
         int k;
         int l;
         while (true) {
-            Scanner scanner = new Scanner(System.in);
+          //  scanner = new Scanner(System.in);
             if (scanner.hasNextInt()) {
                 k = scanner.nextInt();
                 if (k > 0) {
@@ -61,7 +62,6 @@ public class Calculator {
             } else {
                 System.out.println("Please, enter a number bigger than 0.");
             }
-            scanner.close();
         }
         return l;
     }
@@ -69,7 +69,7 @@ public class Calculator {
     public double readNumber() {
 
         double d;
-        Scanner scanner = new Scanner(System.in);
+       // scanner = new Scanner(System.in);
 
         while (true) {
             if (scanner.hasNextDouble()) {
@@ -77,7 +77,6 @@ public class Calculator {
                 break;
             }
         }
-        scanner.close();
         return d;
     }
 
@@ -117,7 +116,6 @@ public class Calculator {
                 while (true) {
                     String s1 = operationEntering();
                     if (s1.equals("y")) {
-                        System.out.println("By what way you want to create matrix?");
                         matrix = chooseCreationWay();
                         printResult(matrix);
                         if (s.equals("*")) {
@@ -219,6 +217,7 @@ public class Calculator {
 
     private Matrix chooseCreationWay() {
 
+        System.out.println("By what way you want to create this matrix?");
         System.out.println("Please, enter next letter:");
         System.out.println("\'r\' - if you want to create matrix with random numbers,");
         System.out.println("\'c\' - if you want to enter numbers by yourself,");
@@ -310,7 +309,7 @@ public class Calculator {
 
         System.out.println("Please, fill your matrix by numbers.");
 
-        Scanner scanner = new Scanner(System.in);
+       // Scanner scanner = new Scanner(System.in);
 
         Matrix matrix = new Matrix(rows, columns);
 
@@ -326,7 +325,6 @@ public class Calculator {
                 }
             }
         }
-        scanner.close();
         return matrix;
     }
 
