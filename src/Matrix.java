@@ -2,7 +2,6 @@
 public class Matrix {
     final private int rows;
     final private int columns;
-    private int maxLengthOfValue = 0;
     final private double[][] matrix;
     
 
@@ -18,7 +17,6 @@ public class Matrix {
     }
 
     public void setElement(int rowNum, int columnsNum, double value) throws IndexOutOfBoundsException {
-        maxLengthOfValue = String.valueOf(matrix[rowNum][columnsNum]).length();
         matrix[rowNum][columnsNum] = value;
     }
 
