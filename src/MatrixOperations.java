@@ -5,13 +5,13 @@ public class MatrixOperations {
 
     public Matrix multiply ( Matrix m1, Matrix m2) {
 
-        int ColumsNumber = m1.getColumsNumber();
+        int ColumnsNumber = m1.getColumnsNumber();
         int RowsNumber = m1.getRowsNumber();
 
-        Matrix  matrix = new Matrix (RowsNumber, ColumsNumber);
+        Matrix  matrix = new Matrix (RowsNumber, ColumnsNumber);
 
         for (int i = 0; i < RowsNumber; i++) {
-          for (int j = 0; j < ColumsNumber; j++) {
+          for (int j = 0; j < ColumnsNumber; j++) {
               matrix.setElement(i, j, (m1.getElement(i,j)*m2.getElement(i,j)+m1.getElement(i,j+1)*m2.getElement(i+1,j)));
           }
         }
@@ -23,13 +23,13 @@ public class MatrixOperations {
 
     public Matrix multiply ( Matrix m1, double number) {
 
-        int ColumsNumber = m1.getColumsNumber();
+        int ColumnsNumber = m1.getColumnsNumber();
         int RowsNumber = m1.getRowsNumber();
 
-        Matrix  matrix = new Matrix (RowsNumber, ColumsNumber);
+        Matrix  matrix = new Matrix (RowsNumber, ColumnsNumber);
 
         for (int i = 0; i < RowsNumber; i++) {
-            for (int j = 0; j < ColumsNumber; j++) {
+            for (int j = 0; j < ColumnsNumber; j++) {
                 matrix.setElement(i, j, m1.getElement(i,j)*number);
 
             }
@@ -44,13 +44,13 @@ public class MatrixOperations {
 
     public Matrix add ( Matrix m1, Matrix m2 ) {
 
-        int ColumsNumber = m1.getColumsNumber();
+        int ColumnsNumber = m1.getColumnsNumber();
         int RowsNumber = m1.getRowsNumber();
 
-        Matrix  matrix = new Matrix(RowsNumber, ColumsNumber);
+        Matrix  matrix = new Matrix(RowsNumber, ColumnsNumber);
 
         for (int i = 0; i < RowsNumber; i++) {
-            for (int j = 0; j < ColumsNumber; j++) {
+            for (int j = 0; j < ColumnsNumber; j++) {
                 matrix.setElement(i, j, m1.getElement(i,j)+m2.getElement(i,j));
 
             }
@@ -65,13 +65,13 @@ public class MatrixOperations {
 
     public Matrix substraction ( Matrix m1, Matrix m2 ) {
 
-        int ColumsNumber = m1.getColumsNumber();
+        int ColumnsNumber = m1.getColumnsNumber();
         int RowsNumber = m1.getRowsNumber();
 
-        Matrix  matrix = new Matrix (RowsNumber, ColumsNumber);
+        Matrix  matrix = new Matrix (RowsNumber, ColumnsNumber);
 
         for (int i = 0; i < RowsNumber; i++) {
-            for (int j = 0; j < ColumsNumber; j++) {
+            for (int j = 0; j < ColumnsNumber; j++) {
                 matrix.setElement(i, j, (m1.getElement(i,j)-m2.getElement(i,j)));
             }
         }
