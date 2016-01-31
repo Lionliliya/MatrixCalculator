@@ -1,20 +1,11 @@
-package com.company;
 
-/**
- * Created by lionliliya on 27.01.16.
- */
 public class MatrixValidator {
-
     public static boolean areMultiplyable(Matrix m1, Matrix m2) {
-
         return m1.getColumnsNumber() == m2.getRowsNumber();
-
     }
 
     public static boolean areSameDimension(Matrix m1, Matrix m2) {
-
         return ((m1.getRowsNumber() == m2.getRowsNumber()) && (m1.getColumnsNumber() == m2.getColumnsNumber()));
-
     }
 
 
@@ -25,7 +16,6 @@ public class MatrixValidator {
         } catch (NumberFormatException e) {
             return false;
         }
-
     }
 
     public static boolean isInteger(String userInput) {
@@ -36,5 +26,4 @@ public class MatrixValidator {
             return false;
         }
     }
-
 }
