@@ -326,6 +326,7 @@ public class Calculator {
                 }
             }
         }
+        scanner.close();
         return matrix;
     }
 
@@ -351,6 +352,7 @@ public class Calculator {
                     list.add(tokenizer.nextToken());
                 }
             }
+            inF.close();
             int l = 0;
             for (int k = 0; k < rows; k++) {
                 for (int j = 0; j < columns; j++) {
