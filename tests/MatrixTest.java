@@ -12,7 +12,6 @@ public class MatrixTest {
     public static void setUp() throws Exception {
         final double [][] array = new double [][] {{0, 1}, {1, 2}, {2, 3}};
         matrix = new Matrix(array);
-
     }
 
     @Test(timeout = 2000)
@@ -40,7 +39,6 @@ public class MatrixTest {
     public void testGetRowsNumber() throws Exception {
          final int rowsNumber = 3;
          assertEquals(rowsNumber, matrix.getRowsNumber());
-
     }
 
 
