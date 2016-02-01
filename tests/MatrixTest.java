@@ -9,7 +9,7 @@ public class MatrixTest {
     private static Matrix matrix;
 
     @BeforeClass
-    public void setUp() throws Exception {
+    public static void setUp() throws Exception {
         final double [][] array = new double [][] {{0, 1}, {1, 2}, {2, 3}};
         matrix = new Matrix(array);
 
@@ -20,7 +20,7 @@ public class MatrixTest {
         final int row = 2;
         final int columns = 1;
         final double result = matrix.getElement(row, columns);
-        assertEquals(3.0, result);
+        assertEquals(3.0, result, 0.0);
     }
 
 
