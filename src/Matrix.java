@@ -11,6 +11,12 @@ public class Matrix {
         this.matrix = new double[rows][columns];
     }
 
+    public Matrix(double [][] array) {
+        this.matrix = array;
+        this.rows = array.length;
+        this.columns = array[0].length;
+    }
+
 
     public double getElement(int rowNum, int columnsNum) {
         return matrix[rowNum][columnsNum];
