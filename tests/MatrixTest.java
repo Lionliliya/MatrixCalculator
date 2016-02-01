@@ -1,6 +1,6 @@
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -15,7 +15,7 @@ public class MatrixTest {
 
     }
 
-    @Test
+    @Test(timeout = 2000)
     public void testGetElement() throws Exception {
         final int row = 2;
         final int columns = 1;
@@ -24,21 +24,29 @@ public class MatrixTest {
     }
 
 
-    @Ignore
-    @Test
+
+    @Test(timeout = 2000)
     public void testSetElement() throws Exception {
-
+        final int row = 0;
+        final int columns = 1;
+        final double element = 4.5;
+        matrix.setElement(row, columns, element);
+        final double result = matrix.getElement(row, columns);
+        assertEquals(element, result, 0.0);
     }
 
-    @Ignore
-    @Test
+
+    @Test(timeout = 2000)
     public void testGetRowsNumber() throws Exception {
+         final int rowsNumber = 3;
+         assertEquals(rowsNumber, matrix.getRowsNumber());
 
     }
 
-    @Ignore
-    @Test
-    public void testGetColumnsNumber() throws Exception {
 
+    @Test(timeout = 2000)
+    public void testGetColumnsNumber() throws Exception {
+        final int columnsNumber = 2;
+        assertEquals(columnsNumber, matrix.getColumnsNumber());
     }
 }
