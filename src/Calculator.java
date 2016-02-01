@@ -85,6 +85,7 @@ public class Calculator {
         }
         return d;
     }
+
     // Ввод аргументов матриц
     private Matrix readOperation(char operation) {
 
@@ -113,7 +114,8 @@ public class Calculator {
 
         boolean bool = true;
 
-      outer:  while (true) {
+        outer:
+        while (true) {
             String s = operationEntering();
             if (s.equals("e")) {
                 scanner.close();
@@ -153,43 +155,46 @@ public class Calculator {
                     System.out.println("Would you like to multiply created matrix by number?");
                     System.out.println("Please, enter \'y\' or \'n\'.");
                     String s2;
-                    switch (s2 = operationEntering()) {
-                        case "y": {
-                            matrix = chooseCreationWay();
-                            double number = readNumber();
-                            resultMatrix = operations.multiply(matrix, number);
-                            if (!resultMatrix.equals(null)) {
-                                printResult(resultMatrix);
-                                bool = false;
+                    while (true) {
+                        switch (s2 = operationEntering()) {
+                            case "y": {
+                                matrix = chooseCreationWay();
+                                double number = readNumber();
+                                resultMatrix = operations.multiply(matrix, number);
+                                if (!resultMatrix.equals(null)) {
+                                    printResult(resultMatrix);
+                                    bool = false;
+                                }
+                                break;
                             }
-                            break;
-                        }
-                        case "n": {
-                            matrix = chooseCreationWay();
-                            resultMatrix = makeAction(matrix, s);
-                            if (resultMatrix != null) {
-                                printResult(resultMatrix);
-                                bool = false;
+                            case "n": {
+                                matrix = chooseCreationWay();
+                                resultMatrix = makeAction(matrix, s);
+                                if (resultMatrix != null) {
+                                    printResult(resultMatrix);
+                                    bool = false;
+                                }
+                                break;
                             }
-                            break;
-                        }
-                        default: {
-                            System.out.println("Please, enter \'y\' or \'n\'.");
+                            default: {
+                                System.out.println("Please, enter \'y\' or \'n\'.");
+                            }
                         }
                     }
                 } else {
                     System.out.println("Would you like to use result matrix as the first matrix in your next operation.");
                     System.out.println("Please, enter \'y\' or \'n\'.");
                     String s1;
-                    switch (s1 = operationEntering()) {
-                        case "y": {
+                    while (true) {
+                        s1 = operationEntering();
+                        if (s1.equals("y")) {
                             matrix = resultMatrix;
                             System.out.println("Would you like to multiply created matrix by number?");
                             System.out.println("Please, enter \'y\' or \'n\'.");
                             String s2;
-                            switch (s2 = operationEntering()) {
-                                case "y": {
-                                    matrix = resultMatrix;
+                            while (true) {
+                                s2 = operationEntering();
+                                if (s2.equals("y")) {
                                     double number = readNumber();
                                     if (!matrix.equals(null)) {
                                         resultMatrix = operations.multiply(matrix, number);
@@ -197,30 +202,25 @@ public class Calculator {
                                     }
                                     break;
                                 }
-                                case "n": {
-                                    matrix = resultMatrix;
+                                if (s.equals("n")) {
                                     if (!matrix.equals(null)) {
                                         resultMatrix = makeAction(matrix, s);
                                         printResult(resultMatrix);
                                     }
                                     break;
-                                }
-                                default: {
+                                } else {
                                     System.out.println("Please, enter \'y\' or \'n\'.");
                                 }
                             }
                             break;
-                        }
-                        case "n": {
+                        } else if (s1.equals("n")) {
                             bool = true;
                             continue outer;
-                        }
-                        default: {
+                        } else {
                             System.out.println("Please, enter \'y\' or \'n\'.");
                         }
                     }
                 }
-                break;
             } else {
                 System.out.println("Here you can calculate your matrices.");
                 System.out.println("Please, make your choice.");
