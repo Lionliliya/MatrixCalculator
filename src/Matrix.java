@@ -3,8 +3,7 @@ public class Matrix {
     final private int rows;
     final private int columns;
     final private double[][] matrix;
-    
-
+ 
     public Matrix(int rows, int columns) throws IndexOutOfBoundsException {
         this.columns = columns;
         this.rows = rows;
