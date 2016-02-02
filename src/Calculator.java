@@ -14,6 +14,8 @@ public class Calculator {
     private String yesOrNo = "Please, enter \'y\' or \'n\'.";
     private String multByNumder = "Would you like to multiply created matrix by number?";
     private String resultInOperation = "Would you like to use result matrix as the first matrix in your next operation.";
+    private String chooseCreationWay = "By what way you want to create the first matrix?";
+    private String reenterLastMatrix = "Would you like to reenter last matrix?";
 
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
@@ -95,9 +97,9 @@ public class Calculator {
 
         String s = String.valueOf(operation);
         Matrix matrix = null;
-        System.out.println("Please, enter the first parameter of your matrix.");
+        System.out.println("Please, enter the rows quantity of your matrix.");
         int k = numberEntering();
-        System.out.println("Please, enter the second parameter of your matrix.");
+        System.out.println("Please, enter the columns quantity of your matrix.");
         int l = numberEntering();
 
         if (s.equals(String.valueOf('r'))) {
@@ -128,7 +130,7 @@ public class Calculator {
                 System.exit(0);
             } else if (s.equals("+") || s.equals("-")) {
                 if (bool) {
-                    System.out.println("By what way you want to create the first matrix?");
+                    System.out.println(chooseCreationWay);
                     matrix = chooseCreationWay();
                     resultMatrix = makeAction(matrix, s);
                     if (resultMatrix != null) {
@@ -149,8 +151,13 @@ public class Calculator {
                             break;
                         }
                         case "n": {
-                            bool = true;
-                            continue outer;
+                            System.out.println(chooseCreationWay);
+                            matrix = chooseCreationWay();
+                            resultMatrix = makeAction(matrix, s);
+                            if (resultMatrix != null){
+                                printResult(resultMatrix);
+                            }
+                            break;
                         }
                         default: {
                             System.out.println(yesOrNo);
@@ -165,7 +172,7 @@ public class Calculator {
                     while (true) {
                         s2 = operationEntering();
                         if (s2.equals("y")) {
-                            System.out.println("By what way you want to create the first matrix?");
+                            System.out.println(chooseCreationWay);
                             matrix = chooseCreationWay();
                             double number = readNumber();
                             resultMatrix = operations.multiply(matrix, number);
@@ -176,6 +183,7 @@ public class Calculator {
                             break;
                         }
                         if (s2.equals("n")) {
+                            System.out.println(chooseCreationWay);
                             matrix = chooseCreationWay();
                             resultMatrix = makeAction(matrix, s);
                             if (resultMatrix != null) {
@@ -220,8 +228,34 @@ public class Calculator {
                             }
                             break;
                         } else if (s1.equals("n")) {
-                            bool = true;
-                            continue outer;
+                            System.out.println(multByNumder);
+                            System.out.println(yesOrNo);
+                            String s2;
+                            while (true) {
+                                s2 = operationEntering();
+                                if (s2.equals("y")) {
+                                    System.out.println(chooseCreationWay);
+                                    matrix = chooseCreationWay();
+                                    double number = readNumber();
+                                    if (!matrix.equals(null)) {
+                                        resultMatrix = operations.multiply(matrix, number);
+                                        printResult(resultMatrix);
+                                    }
+                                    break;
+                                }
+                                if (s2.equals("n")){
+                                    System.out.println(chooseCreationWay);
+                                    matrix = chooseCreationWay();
+                                    if (!matrix.equals(null)) {
+                                        resultMatrix = makeAction(matrix, s);
+                                        printResult(resultMatrix);
+                                    }
+                                    break;
+                                }
+                                else {
+                                    System.out.println(yesOrNo);
+                                }
+                            }
                         } else {
                             System.out.println(yesOrNo);
                         }
@@ -238,18 +272,35 @@ public class Calculator {
         while (true) {
             System.out.println("By what way you want to create the second matrix?");
             Matrix matrix2 = chooseCreationWay();
-            if (s.equals("+") && MatrixValidator.areSameDimension(matrix1, matrix2)) {
+            if ((s.equals("+") && MatrixValidator.areSameDimension(matrix1, matrix2))
+                    || (s.equals("-") && MatrixValidator.areSameDimension(matrix1, matrix2))) {
                 resultMatrix = operations.add(matrix1, matrix2);
-                break;
-            } else if (s.equals("-") && MatrixValidator.areSameDimension(matrix1, matrix2)) {
-                resultMatrix = operations.substraction(matrix1, matrix2);
                 break;
             } else if (s.equals("*") && MatrixValidator.areMultiplyable(matrix1, matrix2)) {
                 resultMatrix = operations.multiply(matrix1, matrix2);
                 break;
-            } else if (!MatrixValidator.areSameDimension(matrix1, matrix2) || !MatrixValidator.areMultiplyable(matrix1, matrix2)) {
-                System.out.println("Matrices have not the same dimension or they are not multiplyable.");
-                System.out.println("Would you like to reenter last matrix?");
+            } else if ((s.equals("+") && !MatrixValidator.areSameDimension(matrix1, matrix2))
+                    || (s.equals("-") && !MatrixValidator.areSameDimension(matrix1, matrix2))) {
+                System.out.println("Matrices have not the same dimension.");
+                System.out.println(reenterLastMatrix);
+                System.out.println(yesOrNo);
+                while (true) {
+                    String s1 = operationEntering();
+                    if (s1.equals("y")) {
+                        continue outer;
+                    }
+                    if (s1.equals("n")) {
+                        bool = true;
+                        break outer;
+                    } else {
+                        System.out.println(yesOrNo);
+                    }
+                }
+            } else if (s.equals("*") && !MatrixValidator.areMultiplyable(matrix1, matrix2)) {
+                System.out.println("Matrices are not multiplyable.");
+                System.out.println("It means that columns quantity of first matrix not equals");
+                System.out.println("rows quantity od second matrix.");
+                System.out.println(reenterLastMatrix);
                 System.out.println(yesOrNo);
                 while (true) {
                     String s1 = operationEntering();
@@ -401,43 +452,50 @@ public class Calculator {
         dialog.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
         dialog.showOpenDialog(null);
         File file = dialog.getSelectedFile();
-        try (FileInputStream inF = new FileInputStream(file)) {
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inF, "utf-8"));
-            String s;
-            String[] strings;
-            int subStrBegin = 0;
+        if (file != null) {
+            try (FileInputStream inF = new FileInputStream(file)) {
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inF, "utf-8"));
+                String s;
+                String[] strings;
+                int subStrBegin = 0;
 
 
-            while ((s = reader.readLine()) != null) {
-                char[] charsInString = s.toCharArray();
-                for (int i = 0; i < charsInString.length; i++) {
-                    if (charsInString[i] == ',' || charsInString[i] == ' ' || charsInString[i] == ';' ||
-                            charsInString[i] == ':' || charsInString[i] == '\'' || charsInString[i] == '\"') {
-                        String subString = s.substring(subStrBegin, i);
-                        list.add(subString);
-                        subStrBegin = i + 1;
+                while ((s = reader.readLine()) != null) {
+                    char[] charsInString = s.toCharArray();
+                    for (int i = 0; i < charsInString.length; i++) {
+                        if (charsInString[i] == ',' || charsInString[i] == ' ' || charsInString[i] == ';' ||
+                                charsInString[i] == ':' || charsInString[i] == '\'' || charsInString[i] == '\"') {
+                            String subString = s.substring(subStrBegin, i);
+                            list.add(subString);
+                            subStrBegin = i + 1;
+                        }
                     }
                 }
-            }
-            int l = 0;
-            double d;
-            for (int k = 0; k < rows; k++) {
-                for (int j = 0; j < columns; j++) {
-                    if (MatrixValidator.isDigit(list.get(l))) {
-                        matrix.setElement(k, j, Double.parseDouble(list.get(l)));
-                        l++;
-                    } else {
-                        break;
+                int l = 0;
+                double d;
+                for (int k = 0; k < rows; k++) {
+                    for (int j = 0; j < columns; j++) {
+                        if (MatrixValidator.isDigit(list.get(l))) {
+                            matrix.setElement(k, j, Double.parseDouble(list.get(l)));
+                            l++;
+                        } else {
+                            break;
+                        }
                     }
-                }
 
+                }
+            } catch (Exception e) {
+                System.out.println("File should contain numbers and after each of them has to follow by one of the elements : , \'\";:");
+                System.out.println("Otherwise, the missing elements are replaced by zeros.");
             }
-        } catch (Exception e) {
-            System.out.println("File should contain numbers and after each of them has to follow by one of the elements : , \'\";:");
-            System.out.println("Otherwise, the missing elements are replaced by zeros.");
+            return matrix;
+        }else {
+            System.out.println("You did not choose any file.");
+            System.out.println("Instead matrix from file will generated matrix of the same dimension filled by zeros.");
+            System.out.println();
+            return readRandomMatrix(rows, columns);
         }
-        return matrix;
     }
-
 }
