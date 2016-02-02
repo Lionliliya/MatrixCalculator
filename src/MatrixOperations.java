@@ -3,7 +3,7 @@ public class MatrixOperations {
 
 /////////////////// MULTIPLY M1*M2//////////////////////////////////////////////////
 
-    public Matrix multiply(Matrix m1, Matrix m2) {
+    public static Matrix multiply(Matrix m1, Matrix m2) {
         int RowsNumber = m1.getRowsNumber();
         int ColumsNumber = m2.getColumnsNumber();
         Matrix matrix = new Matrix(RowsNumber, ColumsNumber);
@@ -20,7 +20,7 @@ public class MatrixOperations {
 
 /////////////////// MULTIPLY M1*NUMBER//////////////////////////////////////////////////
 
-    public Matrix multiply ( Matrix m1, double number) {
+    public static Matrix multiply ( Matrix m1, double number) {
         int ColumnsNumber = m1.getColumnsNumber();
         int RowsNumber = m1.getRowsNumber();
         Matrix  matrix = new Matrix (RowsNumber, ColumnsNumber);
@@ -35,7 +35,7 @@ public class MatrixOperations {
 
 /////////////////// ADD M1 + M2//////////////////////////////////////////////////
 
-    public Matrix add ( Matrix m1, Matrix m2 ) {
+    public static Matrix add ( Matrix m1, Matrix m2 ) {
         int ColumnsNumber = m1.getColumnsNumber();
         int RowsNumber = m1.getRowsNumber();
         Matrix  matrix = new Matrix(RowsNumber, ColumnsNumber);
@@ -50,7 +50,7 @@ public class MatrixOperations {
 
 /////////////////// SUBSTRACTION M1 - M2//////////////////////////////////////////////////
 
-    public Matrix substraction ( Matrix m1, Matrix m2 ) {
+    public static Matrix substraction ( Matrix m1, Matrix m2 ) {
         int ColumnsNumber = m1.getColumnsNumber();
         int RowsNumber = m1.getRowsNumber();
         Matrix  matrix = new Matrix (RowsNumber, ColumnsNumber);
