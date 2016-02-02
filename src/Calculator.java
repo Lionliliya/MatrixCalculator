@@ -251,6 +251,7 @@ public class Calculator {
                                     System.out.println(yesOrNo);
                                 }
                             }
+                            break;
                         } else {
                             System.out.println(yesOrNo);
                         }
