@@ -269,6 +269,7 @@ public class Calculator {
             Matrix matrix2 = chooseCreationWay();
             if (s.equals("+") && MatrixValidator.areSameDimension(matrix1, matrix2)) {
                 resultMatrix = MatrixOperations.add(matrix1, matrix2);
+                break;
             } else if (s.equals("-") && MatrixValidator.areSameDimension(matrix1, matrix2)) {
                 resultMatrix = MatrixOperations.substraction(matrix1, matrix2);
                 break;
@@ -413,9 +414,6 @@ public class Calculator {
     private Matrix readMatrixFromConsole(int rows, int columns) {
 
         System.out.println("Please, fill your matrix by numbers.");
-
-        // Scanner scanner = new Scanner(System.in);
-
         Matrix matrix = new Matrix(rows, columns);
         String s;
 
@@ -439,7 +437,6 @@ public class Calculator {
     }
 
     // Создание матрицы и получение значений для нее из файла.
-
     private Matrix readMatrixFromFile(int rows, int columns) {
 
         Matrix matrix = new Matrix(rows, columns);
@@ -454,9 +451,7 @@ public class Calculator {
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inF, "utf-8"));
                 String s;
-                String[] strings;
                 int subStrBegin = 0;
-
 
                 while ((s = reader.readLine()) != null) {
                     char[] charsInString = s.toCharArray();
@@ -470,7 +465,6 @@ public class Calculator {
                     }
                 }
                 int l = 0;
-                double d;
                 for (int k = 0; k < rows; k++) {
                     for (int j = 0; j < columns; j++) {
                         if (MatrixValidator.isDigit(list.get(l))) {
@@ -480,7 +474,6 @@ public class Calculator {
                             break;
                         }
                     }
-
                 }
             } catch (Exception e) {
                 System.out.println("File should contain numbers and after each of them has to follow by one of the elements : , \'\";:");
@@ -492,7 +485,6 @@ public class Calculator {
             System.out.println("Instead matrix from file will generated matrix of the same dimension filled by zeros.");
             System.out.println();
             try {
-
                 for (int k = 0; k < rows; k++) {
                     for (int j = 0; j < columns; j++) {
                         matrix.setElement(k, j, 0);
