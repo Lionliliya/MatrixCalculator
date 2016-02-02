@@ -6,7 +6,6 @@ import java.util.*;
 public class Calculator {
 
     private Scanner scanner = new Scanner(System.in);
-    MatrixOperations operations = new MatrixOperations();
     boolean bool = true;
     Matrix matrix;
     Matrix resultMatrix;
@@ -46,8 +45,7 @@ public class Calculator {
     // Любой ввод данных
     private String operationEntering() {
 
-        String s = scanner.nextLine();
-        return s;
+        return scanner.nextLine();
     }
 
     // Ввод размеров матриц. Должны быть положительные числа.
@@ -115,10 +113,8 @@ public class Calculator {
     public void startDialog() {
 
         startMessages();
-
         boolean bool = true;
 
-        outer:
         while (true) {
             System.out.println("If you want to do some action you need to enter one of these letters:");
             System.out.println("\"+\" - is addition, \"-\" - is subtraction, \"*\" - is multiplication");
@@ -154,7 +150,7 @@ public class Calculator {
                             System.out.println(chooseCreationWay);
                             matrix = chooseCreationWay();
                             resultMatrix = makeAction(matrix, s);
-                            if (resultMatrix != null){
+                            if (resultMatrix != null) {
                                 printResult(resultMatrix);
                             }
                             break;
@@ -175,7 +171,7 @@ public class Calculator {
                             System.out.println(chooseCreationWay);
                             matrix = chooseCreationWay();
                             double number = readNumber();
-                            resultMatrix = operations.multiply(matrix, number);
+                            resultMatrix = MatrixOperations.multiply(matrix, number);
                             if (!resultMatrix.equals(null)) {
                                 printResult(resultMatrix);
                                 bool = false;
@@ -211,7 +207,7 @@ public class Calculator {
                                 if (s2.equals("y")) {
                                     double number = readNumber();
                                     if (!matrix.equals(null)) {
-                                        resultMatrix = operations.multiply(matrix, number);
+                                        resultMatrix = MatrixOperations.multiply(matrix, number);
                                         printResult(resultMatrix);
                                     }
                                     break;
@@ -238,12 +234,12 @@ public class Calculator {
                                     matrix = chooseCreationWay();
                                     double number = readNumber();
                                     if (!matrix.equals(null)) {
-                                        resultMatrix = operations.multiply(matrix, number);
+                                        resultMatrix = MatrixOperations.multiply(matrix, number);
                                         printResult(resultMatrix);
                                     }
                                     break;
                                 }
-                                if (s2.equals("n")){
+                                if (s2.equals("n")) {
                                     System.out.println(chooseCreationWay);
                                     matrix = chooseCreationWay();
                                     if (!matrix.equals(null)) {
@@ -251,8 +247,7 @@ public class Calculator {
                                         printResult(resultMatrix);
                                     }
                                     break;
-                                }
-                                else {
+                                } else {
                                     System.out.println(yesOrNo);
                                 }
                             }
@@ -272,12 +267,13 @@ public class Calculator {
         while (true) {
             System.out.println("By what way you want to create the second matrix?");
             Matrix matrix2 = chooseCreationWay();
-            if ((s.equals("+") && MatrixValidator.areSameDimension(matrix1, matrix2))
-                    || (s.equals("-") && MatrixValidator.areSameDimension(matrix1, matrix2))) {
-                resultMatrix = operations.add(matrix1, matrix2);
+            if (s.equals("+") && MatrixValidator.areSameDimension(matrix1, matrix2)) {
+                resultMatrix = MatrixOperations.add(matrix1, matrix2);
+            } else if (s.equals("-") && MatrixValidator.areSameDimension(matrix1, matrix2)) {
+                resultMatrix = MatrixOperations.substraction(matrix1, matrix2);
                 break;
             } else if (s.equals("*") && MatrixValidator.areMultiplyable(matrix1, matrix2)) {
-                resultMatrix = operations.multiply(matrix1, matrix2);
+                resultMatrix = MatrixOperations.multiply(matrix1, matrix2);
                 break;
             } else if ((s.equals("+") && !MatrixValidator.areSameDimension(matrix1, matrix2))
                     || (s.equals("-") && !MatrixValidator.areSameDimension(matrix1, matrix2))) {
@@ -356,7 +352,7 @@ public class Calculator {
         System.out.println("The result matrix is:");
         for (int i = 0; i < resultMatrix.getRowsNumber(); i++) {
             for (int j = 0; j < resultMatrix.getColumnsNumber(); j++) {
-                if (Double.valueOf(resultMatrix.getElement(i, j)) != Math.ceil(resultMatrix.getElement(i, j))) {
+                if (resultMatrix.getElement(i, j) != Math.ceil(resultMatrix.getElement(i, j))) {
                     k++;
                     break;
                 }
@@ -491,11 +487,21 @@ public class Calculator {
                 System.out.println("Otherwise, the missing elements are replaced by zeros.");
             }
             return matrix;
-        }else {
+        } else {
             System.out.println("You did not choose any file.");
             System.out.println("Instead matrix from file will generated matrix of the same dimension filled by zeros.");
             System.out.println();
-            return readRandomMatrix(rows, columns);
+            try {
+
+                for (int k = 0; k < rows; k++) {
+                    for (int j = 0; j < columns; j++) {
+                        matrix.setElement(k, j, 0);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return matrix;
         }
     }
 }
