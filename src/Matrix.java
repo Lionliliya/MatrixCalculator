@@ -1,19 +1,21 @@
-
 public class Matrix {
     final private int rows;
     final private int columns;
-    final private double[][] matrix;
- 
+    private double[][] matrix;
+
     public Matrix(int rows, int columns) throws IndexOutOfBoundsException {
         this.columns = columns;
         this.rows = rows;
         this.matrix = new double[rows][columns];
     }
 
-    public Matrix(double [][] array) {
-        this.matrix = array;
-        this.rows = array.length;
-        this.columns = array[0].length;
+    public Matrix(double[][] array) {
+        this(array.length, array[0].length);
+        matrix = array;
+    }
+
+    public double[][] getMatrix() {
+        return matrix;
     }
 
 
