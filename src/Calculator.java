@@ -421,6 +421,7 @@ public class Calculator {
         try {
             for (int k = 0; k < rows; k++) {
                 for (int j = 0; j < columns; j++) {
+                    System.out.println("Please, enter element [" + k + "]" + "[" + j +"]");
                     while (true) {
                         if (MatrixValidator.isDigit(String.valueOf(s = operationEntering()))) {
                             matrix.setElement(k, j, Double.parseDouble(s));
